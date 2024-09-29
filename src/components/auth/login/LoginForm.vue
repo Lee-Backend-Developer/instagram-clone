@@ -126,6 +126,8 @@ import {
 import type {
     LoginInput
 } from '@/common'
+import axios from "axios";
+import UrlAddress from "@/common/enums/url.address";
 
 // Form
 const loginForm = ref<LoginInput>({
@@ -170,6 +172,11 @@ const login = () => {
     setTimeout(() => {
         // TODO - Login logic
         // Success toastr
+        axios.post(UrlAddress()+"/member/login", loginForm.value).then((response) => {
+            console.log(response.data)
+        }).catch((error) => {
+            console.log(error)
+        })
         toast.success('Success. Redirecting...')
         isLoading.value = false
 		router.push('/')
