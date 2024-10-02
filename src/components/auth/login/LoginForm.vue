@@ -22,15 +22,15 @@
 				<!-- Input: Email -->
 				<div class="mb-2">
 					<TheInput
-						v-model="loginForm.username" 
-						placeholder="Phone number, username, or email" 
+						v-model="loginForm.email"
+						placeholder="email"
 						:class="{
-							'border-red-400': v$.username.$dirty && v$.username.$invalid 
+							'border-red-400': v$.email.$dirty && v$.email.$invalid
 						}"
-						@blur="v$.username.$touch" />
+						@blur="v$.email.$touch" />
 
 					<p
-						v-for="error of v$.username.$errors"
+						v-for="error of v$.email.$errors"
 						:key="error.$uid"
 						class="mt-2 text-xs text-red-600 dark:text-red-500">
 						{{ error.$message }}
@@ -131,7 +131,7 @@ import UrlAddress from "@/common/enums/url.address";
 
 // Form
 const loginForm = ref<LoginInput>({
-    username: null,
+    email: null,
     password: null
 })
 
@@ -141,7 +141,7 @@ const isLoading = ref<boolean>(false)
 
 //  Computed
 const validation = computed(() => ({
-    username: {
+  email: {
         required: helpers.withMessage(
             'Username is required',
             required
@@ -172,7 +172,7 @@ const login = () => {
     setTimeout(() => {
         // TODO - Login logic
         // Success toastr
-        axios.post(UrlAddress()+"/member/login", loginForm.value).then((response) => {
+        axios.post(UrlAddress()+"/api/member/login", loginForm.value).then((response) => {
             console.log(response.data)
         }).catch((error) => {
             console.log(error)

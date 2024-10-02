@@ -146,6 +146,8 @@ import {
     SignUpFooter,
 	SignUpHeader
 } from '@/components'
+import axios from "axios";
+import UrlAddress from "@/common/enums/url.address";
 
 // Form
 const signupForm = ref({
@@ -211,6 +213,12 @@ const signup = () => {
     setTimeout(() => {
         // Success toastr
         // TODO: Replace with actual signup logic
+      axios.post(UrlAddress() + "/api/member/signUp", signupForm.value)
+        .then((response) => {
+          console.log(response.data);
+        }).catch((error) => {
+        console.log(error);
+      });
         toast.success('Success. Redirecting...')
 		router.push({ name: 'home' })
         isLoading.value = false
