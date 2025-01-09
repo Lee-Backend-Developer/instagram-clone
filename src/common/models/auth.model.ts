@@ -3,7 +3,7 @@
  */
 export interface LoginInput {
     /** Username or email of the user */
-    username: string | null
+    email: string | null
 
     /** User's password */
     password: string | null

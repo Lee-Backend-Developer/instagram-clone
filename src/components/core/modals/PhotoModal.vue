@@ -546,6 +546,8 @@ import {
     usePhotoStore,
     useModalManagerStore
 } from '@/stores'
+import axios from "axios";
+import UrlAddress from "@/common/enums/url.address";
 
 /**
  * TODO:
@@ -742,6 +744,13 @@ const resetModalState = () => {
 watch(currentModalStage, () => {
     if (currentModalStage.value === PhotoStage.SharingPost) {
         setTimeout(() => {
+          // 백엔드 서비스 호출
+          axios.post(UrlAddress()+"/api/posts/add")
+            .then((response) => {
+                console.log(response)
+            }).catch((error) => {
+                console.log(error)
+            })
             currentModalStage.value = PhotoStage.PostShared
             setTimeout(() => {
                 // Clear photoModal
@@ -804,6 +813,7 @@ const isModalToggled = computed(() => {
     return props.isToggled ? props.isToggled : photoStore.isToggled ? photoStore.isToggled : false
 })
 
+// 버튼에 표시할 이름을 결정하는 computed
 const largeModalHeaderName = computed(() => {
     switch (currentModalStage.value) {
         case PhotoStage.CreatePost:
@@ -820,6 +830,7 @@ const largeModalHeaderName = computed(() => {
     }
 })
 
+// 화면에 표시하는 computed
 const smallModalHeaderName = computed(() => {
     switch (currentModalStage.value) {
         case PhotoStage.CreatePost:

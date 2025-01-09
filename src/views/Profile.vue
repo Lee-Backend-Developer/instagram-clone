@@ -6,7 +6,7 @@
             class="flex flex-col w-full max-w-4xl flex-nowrap space-y-4 
             pt-2 md:pt-0 justify-self-end lg:mr-[64px]">
             
-            <ProfileHeader 
+            <ProfileHeader
                 v-if="profile"
                 @open-modal="toggleStatsModal"
                 :user="profile" />
@@ -81,9 +81,16 @@ import {
 import {
     SampleGenerator
 } from '@/data'
+import axios from "axios";
+import urlAddress from "@/common/enums/url.address";
 
 // Data
 const profile = ref<User | undefined>(SampleGenerator.generateRandomUser())
+axios.get(urlAddress()+"/api/member/"+"admin")
+  .then((response) => {
+    console.log(response.data);
+    profile.value = response.data;
+  });
 const posts = ref<PostCardType[] | undefined>(profile.value?.mediaItems)
 
 // Services
